@@ -9,19 +9,20 @@ class ApplicationLocalizations {
 
   ApplicationLocalizations(this.appLocale);
 
-  static ApplicationLocalizations of(BuildContext context) {
-    return Localizations.of<ApplicationLocalizations>(context, ApplicationLocalizations);
+  static ApplicationLocalizations? of(BuildContext context) {
+    return Localizations.of<ApplicationLocalizations>(
+        context, ApplicationLocalizations);
   }
 
   static const LocalizationsDelegate<ApplicationLocalizations> delegate =
-  ApplicationLocalizationsDelegate();
+      ApplicationLocalizationsDelegate();
 
-  Map<String, String> _localizedStrings;
+  late Map<String, String> _localizedStrings;
 
   Future<bool> load() async {
     // Load JSON file from the "language" folder
     String jsonString =
-    await rootBundle.loadString('assets/language/${appLocale.languageCode}.json');
+        await rootBundle.loadString('language/${appLocale.languageCode}.json');
     Map<String, dynamic> jsonLanguageMap = json.decode(jsonString);
     _localizedStrings = jsonLanguageMap.map((key, value) {
       return MapEntry(key, value.toString());
@@ -30,7 +31,7 @@ class ApplicationLocalizations {
   }
 
   // called from every widget which needs a localized text
-  String translate(String jsonkey) {
+  String? translate(String jsonkey) {
     return _localizedStrings[jsonkey];
   }
 }
